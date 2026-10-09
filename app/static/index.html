@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Website Navigator</title>
+  <meta name="description" content="Tell it which website to search and what to find, and it takes you to the right page.">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main>
+    <h1>Website Navigator</h1>
+    <p class="lead">Tell me which website to search and what you want to find. I will look through it and link you to the best page.</p>
+
+    <form id="search-form" novalidate>
+      <label for="site">Website address</label>
+      <input id="site" name="site" type="text" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="example-school.org" required>
+
+      <label for="wanted">What do you want to find?</label>
+      <input id="wanted" name="wanted" type="text" autocomplete="off" maxlength="300" placeholder="the 2026 school calendar" required>
+
+      <button id="go" type="submit">Search</button>
+    </form>
+
+    <section id="status" aria-live="polite" hidden>
+      <p id="status-text"></p>
+      <progress id="bar" max="1" value="0" hidden></progress>
+    </section>
+
+    <section id="error" role="alert" hidden></section>
+    <section id="results" aria-live="polite"></section>
+
+    <p class="fine">I read pages the way a visitor would, follow each site's robots.txt rules, go easy on the server, and keep nothing after the search.</p>
+  </main>
+  <script src="/static/app.js"></script>
+</body>
+</html>
