@@ -3,14 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
   <title>Website Navigator</title>
-  <meta name="description" content="Tell it which website to search and what to find, and it takes you to the right page.">
+  <meta name="description" content="Enter a website and say what you want to find. It searches the site and links you to the best page.">
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
   <main>
     <h1>Website Navigator</h1>
-    <p class="lead">Tell me which website to search and what you want to find. I will look through it and link you to the best page.</p>
+    <p class="lead">Enter a website and say what you want to find. It searches the site and links you to the best page.</p>
 
     <form id="search-form" novalidate>
       <label for="site">Website address</label>
@@ -19,7 +20,7 @@
       <label for="wanted">What do you want to find?</label>
       <input id="wanted" name="wanted" type="text" autocomplete="off" maxlength="300" placeholder="the 2026 school calendar" required>
 
-      <button id="go" type="submit">Search</button>
+      <button id="go" type="submit">Find page</button>
     </form>
 
     <section id="status" aria-live="polite" hidden>
@@ -30,7 +31,7 @@
     <section id="error" role="alert" hidden></section>
     <section id="results" aria-live="polite"></section>
 
-    <p class="fine">I read pages the way a visitor would, follow each site's robots.txt rules, go easy on the server, and keep nothing after the search.</p>
+    <p class="fine">It reads pages the way a visitor would, follows each site's robots.txt rules, goes easy on the server, and keeps nothing after the search.</p>
   </main>
   <script src="/static/app.js"></script>
 </body>

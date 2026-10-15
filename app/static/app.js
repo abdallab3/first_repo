@@ -36,8 +36,33 @@
     bar.value = 0;
   }
 
+  // Shows where a page lives as a trail: site > folder > page
+  function trailFor(item) {
+    var list = el("ul", "trail");
+    var tag = item.kind === "pdf" ? "PDF" : item.kind === "document" ? "Document" : "";
+    if (tag) list.appendChild(el("li", "tag", tag));
+    try {
+      var parsed = new URL(item.url);
+      var parts = [parsed.hostname.replace(/^www\./, "")];
+      parsed.pathname.split("/").forEach(function (part) {
+        if (part) parts.push(decodeURIComponent(part));
+      });
+      parts.forEach(function (part) {
+        list.appendChild(el("li", "", part));
+      });
+    } catch (err) {
+      list.appendChild(el("li", "", String(item.url)));
+    }
+    return list;
+  }
+
   function resultCard(item, label, isBest) {
     var card = el("article", "card" + (isBest ? " best" : ""));
+    if (isBest) {
+      var arrow = el("span", "sign-arrow");
+      arrow.setAttribute("aria-hidden", "true");
+      card.appendChild(arrow);
+    }
     if (label) card.appendChild(el("p", "label " + (item.strength || ""), label));
     var heading = el("h2");
     if (isWebAddress(item.url)) {
@@ -50,8 +75,7 @@
       heading.textContent = item.title || "Result";
     }
     card.appendChild(heading);
-    var kind = item.kind === "pdf" ? "PDF file · " : item.kind === "document" ? "Document · " : "";
-    card.appendChild(el("p", "url", kind + item.url));
+    card.appendChild(trailFor(item));
     if (item.reasons && item.reasons.length) {
       var list = el("ul", "reasons");
       item.reasons.forEach(function (reason) {
@@ -61,6 +85,13 @@
     }
     if (item.missing && item.missing.length) {
       card.appendChild(el("p", "missing", "Not found on this page: " + item.missing.join(", ")));
+    }
+    if (isBest && isWebAddress(item.url)) {
+      var open = el("a", "open", "Open page");
+      open.href = item.url;
+      open.target = "_blank";
+      open.rel = "noopener noreferrer";
+      card.appendChild(open);
     }
     return card;
   }
