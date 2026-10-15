@@ -1,5 +1,7 @@
 # Website Navigator
 
+**Open the app: https://firstrepo-production-39dc.up.railway.app**
+
 A web app where you enter a website address and tell it what to find, such as
 "find the 2026 school calendar page". It looks through the site and links you to the best match.
 
