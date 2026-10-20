@@ -2,37 +2,69 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="color-scheme" content="light dark">
-  <title>Website Navigator</title>
-  <meta name="description" content="Enter a website and say what you want to find. It searches the site and links you to the best page.">
+  <title>Bus Tracker</title>
+  <meta name="description" content="See where buses are right now. Riders can share their location to show where their bus is.">
   <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-  <main>
-    <h1>Website Navigator</h1>
-    <p class="lead">Enter a website and say what you want to find. It searches the site and links you to the best page.</p>
+  <div class="app">
+    <header class="bar">
+      <div class="bar-title">
+        <h1>Bus Tracker</h1>
+        <p id="status" aria-live="polite">Loading buses...</p>
+      </div>
+      <div class="bar-filter">
+        <label for="route-filter">Route</label>
+        <select id="route-filter"><option value="">All routes</option></select>
+      </div>
+    </header>
 
-    <form id="search-form" novalidate>
-      <label for="site">Website address</label>
-      <input id="site" name="site" type="text" inputmode="url" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="example-school.org" required>
+    <main class="stage">
+      <div id="map"></div>
 
-      <label for="wanted">What do you want to find?</label>
-      <input id="wanted" name="wanted" type="text" autocomplete="off" maxlength="300" placeholder="the 2026 school calendar" required>
+      <details id="list" class="panel list">
+        <summary id="list-summary">Bus list</summary>
+        <ul id="list-items"></ul>
+      </details>
 
-      <button id="go" type="submit">Find page</button>
-    </form>
+      <p class="legend" aria-hidden="true">
+        <span class="key agency"></span>Agency feed
+        <span class="key riders"></span>Reported by riders
+      </p>
 
-    <section id="status" aria-live="polite" hidden>
-      <p id="status-text"></p>
-      <progress id="bar" max="1" value="0" hidden></progress>
-    </section>
+      <section id="info" class="panel info" hidden aria-live="polite">
+        <button id="info-close" type="button" class="plain close" aria-label="Close bus details">Close</button>
+        <h2 id="info-title"></h2>
+        <p id="info-source"></p>
+        <p id="info-detail"></p>
+      </section>
 
-    <section id="error" role="alert" hidden></section>
-    <section id="results" aria-live="polite"></section>
+      <section id="share" class="panel sheet" hidden aria-labelledby="share-title">
+        <h2 id="share-title">Share your bus</h2>
+        <div id="share-setup">
+          <label for="route-pick">Which route are you on?</label>
+          <select id="route-pick"></select>
+          <input id="route-other" type="text" maxlength="40" placeholder="Route name or number" autocomplete="off" hidden>
+          <p class="fine">Your phone's location places the bus on the map. Other people see the bus, never you. Keep this page open while you ride. Sharing stops when you tap Stop, close the page, or lose signal for two minutes.</p>
+          <div class="row">
+            <button id="share-start" type="button">Start sharing</button>
+            <button id="share-cancel" type="button" class="plain">Cancel</button>
+          </div>
+        </div>
+        <div id="share-live" hidden>
+          <p id="share-status"></p>
+          <p class="fine">Your bus appears on the map once it starts moving.</p>
+          <button id="share-stop" type="button">Stop sharing</button>
+        </div>
+        <p id="share-error" class="error" role="alert" hidden></p>
+      </section>
 
-    <p class="fine">It reads pages the way a visitor would, follows each site's robots.txt rules, goes easy on the server, and keeps nothing after the search.</p>
-  </main>
+      <button id="share-open" type="button" class="share-open">Share my bus</button>
+    </main>
+  </div>
+  <script src="/static/map.js"></script>
   <script src="/static/app.js"></script>
 </body>
 </html>

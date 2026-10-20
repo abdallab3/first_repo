@@ -1,6 +1,6 @@
 import unittest
 
-from app.limiter import ConcurrencyGate, RateLimiter
+from app.limiter import RateLimiter
 
 
 class FakeClock:
@@ -33,16 +33,6 @@ class RateLimiting(unittest.TestCase):
             self.assertFalse(limiter.allow("a")[0])
         clock.now += 20
         self.assertTrue(limiter.allow("a")[0])
-
-
-class ConcurrencyLimits(unittest.TestCase):
-    def test_only_so_many_searches_run_at_once(self):
-        gate = ConcurrencyGate(2)
-        self.assertTrue(gate.try_enter())
-        self.assertTrue(gate.try_enter())
-        self.assertFalse(gate.try_enter())
-        gate.leave()
-        self.assertTrue(gate.try_enter())
 
 
 if __name__ == "__main__":

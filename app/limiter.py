@@ -1,4 +1,4 @@
-"""Limits on how much one visitor, and the whole server, can search at once."""
+"""Limits on how often one visitor can use each part of the app."""
 
 import threading
 import time
@@ -6,7 +6,7 @@ from collections import defaultdict, deque
 
 
 class RateLimiter:
-    """Allow `limit` searches per visitor in any `window` seconds."""
+    """Allow `limit` requests per visitor in any `window` seconds."""
 
     def __init__(self, limit, window, clock=time.monotonic):
         self.limit = limit
@@ -30,16 +30,3 @@ class RateLimiter:
                 for k in [k for k, v in self._hits.items() if not v or now - v[-1] >= self.window]:
                     del self._hits[k]
             return True, 0
-
-
-class ConcurrencyGate:
-    """Cap the number of searches running at the same moment."""
-
-    def __init__(self, limit):
-        self._sem = threading.BoundedSemaphore(limit)
-
-    def try_enter(self):
-        return self._sem.acquire(blocking=False)
-
-    def leave(self):
-        self._sem.release()
