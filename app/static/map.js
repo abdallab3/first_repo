@@ -153,6 +153,9 @@
           img.draggable = false;
           img.className = "sm-tile";
           img.addEventListener("error", function () { this.style.visibility = "hidden"; });
+          // Tile servers such as OpenStreetMap's refuse requests that do not say which site they
+          // come from. Send only this site's own address, never the page path or anything else.
+          img.referrerPolicy = "origin";
           img.src = this.tileUrl
             .replace("{z}", z0)
             .replace("{x}", wrapped)
