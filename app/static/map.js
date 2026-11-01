@@ -176,11 +176,21 @@
         delete this.tiles[k];
       }
     }
+    // Markers glide smoothly when a bus reports a new position, but must never slide when the
+    // map itself is zoomed, panned or resized. So when the view changed, move them instantly.
+    var view = this.lat + "," + this.lon + "," + this.zoom + "," + w + "," + h;
+    var viewChanged = view !== this.lastView;
+    this.lastView = view;
+    if (viewChanged) this.markerPane.classList.add("sm-instant");
     var c = project(this.lat, this.lon, this.zoom);
     for (var i = 0; i < this.markers.length; i++) {
       var m = this.markers[i];
       var p = project(m.lat, m.lon, this.zoom);
       m.el.style.transform = "translate(" + (p.x - c.x + w / 2) + "px," + (p.y - c.y + h / 2) + "px)";
+    }
+    if (viewChanged) {
+      void this.markerPane.offsetWidth; // apply the instant move before gliding is allowed again
+      this.markerPane.classList.remove("sm-instant");
     }
   };
 
