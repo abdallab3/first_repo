@@ -16,8 +16,15 @@
         <p id="status" aria-live="polite">Loading buses...</p>
       </div>
       <div class="bar-filter">
-        <label for="route-filter">Route</label>
-        <select id="route-filter"><option value="">All routes</option></select>
+        <label for="bus-search">Find a bus</label>
+        <div class="combo">
+          <input id="bus-search" type="text" role="combobox" aria-expanded="false" aria-controls="bus-suggest" aria-autocomplete="list" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="20" placeholder="Route or bus number">
+          <ul id="bus-suggest" role="listbox" aria-label="Matching routes and buses" hidden></ul>
+        </div>
+      </div>
+      <div id="tags-row" class="tags-row" hidden>
+        <ul id="tags" class="tags" aria-label="Buses shown on the map"></ul>
+        <button id="tags-clear" type="button" class="plain on-bar">Show all buses</button>
       </div>
     </header>
 

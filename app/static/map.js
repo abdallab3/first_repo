@@ -92,6 +92,19 @@
     this.schedule();
   };
 
+  // Show a box of the world (south, west, north, east) with some room around it.
+  SimpleMap.prototype.fitBounds = function (south, west, north, east) {
+    var w = Math.max(100, this.width() - 120);
+    var h = Math.max(100, this.height() - 200);
+    var zoom = this.minZoom;
+    for (var z = Math.min(this.maxZoom, 15); z >= this.minZoom; z--) {
+      var a = project(north, west, z);
+      var b = project(south, east, z);
+      if (Math.abs(b.x - a.x) <= w && Math.abs(b.y - a.y) <= h) { zoom = z; break; }
+    }
+    this.setView((south + north) / 2, (west + east) / 2, zoom);
+  };
+
   SimpleMap.prototype.panBy = function (dx, dy) {
     var c = project(this.lat, this.lon, this.zoom);
     var p = unproject(c.x - dx, c.y - dy, this.zoom);

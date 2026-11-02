@@ -75,16 +75,71 @@ button:focus-visible, select:focus-visible, input:focus-visible, summary:focus-v
 }
 .bar h1 { margin: 0; font-size: 1.5rem; line-height: 1.1; font-weight: 800; letter-spacing: -0.02em; }
 .bar-title p { margin: 0.15rem 0 0; color: var(--bar-muted); font-size: 0.9rem; }
+.bar { position: relative; z-index: 10; }
 .bar-filter { display: flex; align-items: center; gap: 0.5rem; }
 .bar-filter label { color: var(--bar-muted); font-size: 0.9rem; }
-.bar select {
-  max-width: 12rem;
+
+.combo { position: relative; }
+.bar input[type="text"] {
+  width: 12rem;
+  max-width: 100%;
   padding: 0.4rem 0.6rem;
   color: #12213a;
   background: #ffffff;
   border: 2px solid var(--signal);
   border-radius: 6px;
 }
+.bar input[type="text"]::placeholder { color: #55627a; }
+#bus-suggest {
+  position: absolute;
+  top: calc(100% + 0.25rem);
+  right: 0;
+  z-index: 20;
+  width: max(100%, 16rem);
+  max-height: 60vh;
+  margin: 0;
+  padding: 0.25rem;
+  overflow-y: auto;
+  list-style: none;
+  color: var(--ink);
+  background: var(--panel);
+  border: 2px solid var(--field-line);
+  border-radius: 8px;
+}
+#bus-suggest li { padding: 0.5rem 0.6rem; border-radius: 6px; cursor: pointer; }
+#bus-suggest li small { color: var(--muted); }
+#bus-suggest li[aria-selected="true"], #bus-suggest li:hover { background: var(--signal); color: var(--on-signal); }
+#bus-suggest li[aria-selected="true"] small, #bus-suggest li:hover small { color: var(--on-signal); }
+#bus-suggest li.none { color: var(--muted); cursor: default; }
+#bus-suggest li.none:hover { background: transparent; color: var(--muted); }
+
+/* Chosen buses, shown as tags under the title */
+.tags-row { flex-basis: 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.9rem; }
+.tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 0; padding: 0; list-style: none; }
+.tags li {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.1rem 0.15rem 0.1rem 0.7rem;
+  color: var(--on-signal);
+  background: var(--signal);
+  border-radius: 99px;
+  font-weight: 700;
+}
+.tags li button {
+  width: 1.7rem;
+  height: 1.7rem;
+  padding: 0;
+  color: var(--on-signal);
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.tags li button:hover { background: rgba(18, 33, 58, 0.15); }
+button.plain.on-bar { color: var(--bar-text); }
 
 /* Map */
 .stage { position: relative; overflow: hidden; }

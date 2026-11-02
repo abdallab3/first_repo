@@ -20,6 +20,9 @@ the page, so there is always something to see.
    are close together are combined into one bus.
 3. **Merging.** A rider on a bus the agency already reports does not add a second dot. They
    count as a confirmation on that bus.
+4. **Choosing buses.** The **Find a bus** box searches routes and bus numbers. Picking one adds it
+   as a tag, and the map shows only the tagged buses. Add as many as you like, remove a tag with
+   its x, or choose **Show all buses**. Your tags are remembered in your own browser.
 
 ## Privacy and safety
 
